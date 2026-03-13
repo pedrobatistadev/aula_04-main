@@ -7,6 +7,25 @@
 
         <a th:href="@{/tarefas/novo}" class="btn btn-primary">Nova Tarefa</a>
 
+        <div class="filtros">
+
+            <a th:href="@{/tarefas}"
+               th:classappend="${filtroAtual == 'todas'} ? 'btn btn-primary' : 'btn btn-secondary'">
+                Todas
+            </a>
+
+            <a th:href="@{/tarefas(filtro='pendentes')}"
+               th:classappend="${filtroAtual == 'pendentes'} ? 'btn btn-primary' : 'btn btn-secondary'">
+                Pendentes
+            </a>
+
+            <a th:href="@{/tarefas(filtro='concluidas')}"
+               th:classappend="${filtroAtual == 'concluidas'} ? 'btn btn-primary' : 'btn btn-secondary'">
+                Concluídas
+            </a>
+
+        </div>
+
         <div class="alert alert-success" th:if="${mensagem}">
             <span th:text="${mensagem}"></span>
         </div>
@@ -18,6 +37,13 @@
         <div th:if="${#lists.isEmpty(tarefas)}" class="empty-message">
             <p>Nenhuma tarefa cadastrada.</p>
         </div>
+
+        <p>
+            Você tem
+            <strong th:text="${total}"></strong> tarefas
+            (<span th:text="${pendentes}"></span> pendentes,
+            <span th:text="${concluidas}"></span> concluídas)
+        </p>
 
         <table th:if="${!#lists.isEmpty(tarefas)}" class="table">
             <thead>
