@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{tarefas/fragments/head :: head(${tarefa.id != null ? 'Editar Tarefa' : 'Nova Tarefa'})}"></head>
+<body>
+    <div class="container">
+        <h1 th:text="${tarefa.id != null ? 'Editar Tarefa' : 'Nova Tarefa'}">Formulário</h1>
+
+        <form th:action="@{/tarefas/salvar}" th:object="${tarefa}" method="post" class="form">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{dataCriacao}">
+
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" th:field="*{titulo}" class="form-control"
+                       placeholder="Digite o título da tarefa">
+                <span class="error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Erro no título</span>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" th:field="*{descricao}" class="form-control" rows="4"
+                          placeholder="Digite a descrição da tarefa"></textarea>
+                <span class="error" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}">Erro na descrição</span>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" id="concluida" th:field="*{concluida}" class="form-check-input">
+                <label for="concluida" class="form-check-label">Concluída</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a th:href="@{/tarefas}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
